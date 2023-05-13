@@ -111,7 +111,7 @@ class TeamAdvancedStatistics:
             this_season_statistics.get_opponent_dataframe(),
         )
 
-    def create_advanced_statistics(self) -> dict[str, float]:
+    def __create_advanced_statistics(self) -> dict[str, float]:
         """
         Populate dictionary with calculated advanced statistics.
 
@@ -526,6 +526,15 @@ class TeamAdvancedStatistics:
             * 100,
             3,
         )
+
+    def __populate_dataframe(self) -> None:
+        """
+        Populate the advanced statistics dataframe with the advanced statistics row.
+        """
+
+        self.__advanced_statistics_dataframe.loc[
+            len(self.__advanced_statistics_dataframe)
+        ] = self.__create_advanced_statistics()
 
 
 if __name__ == "__main__":

@@ -176,6 +176,9 @@ class TeamAdvancedStatistics:
         """
         Calculate the team's assist rate.
 
+        Assist rate is defined as the percentage of a team's field goals that are scored as a result of an assist from a
+        team-mate.
+
         :return: The team's assist rate, rounded to three decimal places.
         :rtype: float
         """
@@ -186,6 +189,8 @@ class TeamAdvancedStatistics:
         """
         Calculate the team's assist/turnover ratio.
 
+        Assist/turnover ratio is defined as the number of assists that a team records for every turnover they commit.
+
         :return: The team's assist/turnover ratio, rounded to three decimal places.
         :rtype: float
         """
@@ -195,6 +200,9 @@ class TeamAdvancedStatistics:
     def __calculate_defensive_rebound_percentage(self) -> float:
         """
         Calculate the team's defensive rebounding rate.
+
+        Defensive rebounding rate is defined as the percentage of defensive rebounds a team records from the total
+        number of defensive rebounding opportunities.
 
         :return: The team's defensive rebounding rate, rounded to three decimal places.
         :rtype: float
@@ -213,6 +221,9 @@ class TeamAdvancedStatistics:
         """
         Calculate the team's offensive rebounding rate.
 
+        Offensive rebounding rate is defined as the percentage of offensive rebounds a team records from the total
+        number of offensive rebounding opportunities.
+
         :return: The team's offensive rebounding rate, rounded to three decimal places.
         :rtype: float
         """
@@ -230,6 +241,9 @@ class TeamAdvancedStatistics:
         """
         Calculate the team's rebounding rate.
 
+        Rebounding rate is defined as the percentage of rebounds a team records from the total number of rebounding
+        opportunities.
+
         :return: The team's rebounding rate, rounded to three decimal places.
         :rtype: float
         """
@@ -246,6 +260,9 @@ class TeamAdvancedStatistics:
     def __calculate_turnover_percentage(self) -> float:
         """
         Calculate the team's turnover rate.
+
+        Turnover rate is defined as an estimate for the percentage of plays a team carries out that result in a
+        committed turnover.
 
         :return: The team's turnover rate, rounded to three decimal places.
         :rtype: float
@@ -266,6 +283,10 @@ class TeamAdvancedStatistics:
         """
         Calculate the team's effective field goal percentage.
 
+        Effective field goal percentage is defined as a metric that adjusts for the fact that a three-point field goal
+        is worth more than a two-point field goal, giving a more accurate representation of a team's point scoring
+        ability.
+
         :return: The team's effective field goal percentage, rounded to three decimal places.
         :rtype: float
         """
@@ -283,6 +304,9 @@ class TeamAdvancedStatistics:
         """
         Calculate the team's true shooting attempts.
 
+        True shooting attempts is defined as the total number of attempts a team takes at scoring points, including 44%
+        of free throw attempts.
+
         :return: The team's true shooting attempts, rounded to three decimal places.
         :rtype: float
         """
@@ -295,6 +319,9 @@ class TeamAdvancedStatistics:
         """
         Calculate the team's true shooting percentage.
 
+        True shooting percentage is defined as a measure of shooting efficiency that takes two-point and three-point
+        field goals as well as free throws into account.
+
         :return: The team's true shooting percentage, rounded to three decimal places.
         :rtype: float
         """
@@ -306,6 +333,9 @@ class TeamAdvancedStatistics:
     def __calculate_possessions(self) -> float:
         """
         Calculate an estimate for the team's total possessions.
+
+        The possessions metric is defined as an estimate for a team's total number of possessions given both theirs and
+        their opponents' statistics.
 
         :return: The team's possessions, rounded to three decimal places.
         :rtype: float
@@ -357,6 +387,9 @@ class TeamAdvancedStatistics:
         """
         Calculate an estimate for the team's opponents' total possessions.
 
+        The possessions metric is defined as an estimate for a team's total number of possessions given both theirs and
+        their opponents' statistics.
+
         :return: The team's opponents' possessions, rounded to three decimal places.
         :rtype: float
         """
@@ -407,6 +440,8 @@ class TeamAdvancedStatistics:
         """
         Calculate an estimate for the team's pace.
 
+        Pace factor is defined as an estimate for a team's total number of possessions per 48 minutes.
+
         :return: The team's pace, rounded to three decimal places.
         :rtype: float
         """
@@ -421,6 +456,9 @@ class TeamAdvancedStatistics:
     def __calculate_team_impact_estimate(self) -> float:
         """
         Calculate the team's impact estimate.
+
+        Team impact estimate is defined as an estimate for the percentage of total game actions that are enacted by a
+        team.
 
         :return: The team's impact estimate, rounded to three decimal places.
         :rtype: float

@@ -3,6 +3,15 @@ import pandas as pd
 
 
 class FixtureSet:
+    """
+    Fixture Set object for a month of NBA games.
+
+    :param month: The month of the fixtures.
+    :type month: str
+    :param year: The season within which the fixtures are played.
+    :type year: str
+    """
+
     def __init__(self, month: str, year: str):
         self.__month = month
         self.__year = year
@@ -14,11 +23,25 @@ class FixtureSet:
         self.__dataframe = pd.DataFrame(columns=self.__headings)
 
     def get_dataframe(self) -> pd.DataFrame:
+        """
+        Retrieve a dataframe populated with the fixtures for the given timespan.
+
+        :return: The fixtures dataframe.
+        :rtype: DataFrame
+        """
+
         self.__populate_dataframe()
 
         return self.__dataframe
 
     def __generate_fixtures(self) -> list[str]:
+        """
+        Generate fixtures by scraping a Basketball-Reference table.
+
+        :return: Lines of a fixtures table.
+        :rtype: list[str]
+        """
+
         this_scraper = SeleniumScraper()
         fixtures = this_scraper.scrape_fixtures(
             f"https://www.basketball-reference.com/leagues/NBA_{self.__year}_games-{self.__month}.html"
@@ -28,6 +51,13 @@ class FixtureSet:
         return fixtures
 
     def __create_headings(self) -> list[str]:
+        """
+        Create a list of headings from the lines of a fixtures table.
+
+        :return: List of headings.
+        :rtype: list[str]
+        """
+
         heading_row = self.__fixtures[0]
         condensed_headings = self.__remove_unnecessary_headings(heading_row.split())
 
@@ -35,6 +65,15 @@ class FixtureSet:
 
     @staticmethod
     def __remove_unnecessary_headings(headings: list[str]) -> list[str]:
+        """
+        Clean a list of headings to remove unnecessary headings.
+
+        :param headings: List of headings.
+        :type headings: list[str]
+        :return: Cleaned list of headings with unnecessary headings removed.
+        :rtype: list[str]
+        """
+
         return [
             heading
             for heading in headings
@@ -43,6 +82,15 @@ class FixtureSet:
 
     @staticmethod
     def __revise_heading_names(headings: list[str]) -> list[str]:
+        """
+        Rename some headings to more appropriate or legible names.
+
+        :param headings: List of headings.
+        :type headings: list[str]
+        :return: List of more appropriately named headings.
+        :rtype: list[str]
+        """
+
         if headings[1] == "Start":
             headings[1] = "Tip-Off Time"
 
@@ -65,6 +113,15 @@ class FixtureSet:
 
     @staticmethod
     def __create_row(fixture: str) -> dict[str, str]:
+        """
+        Convert a line of fixture data to a fixture dictionary which can then be appended as a row to a dataframe.
+
+        :param fixture: Line of fixture data.
+        :type fixture: str
+        :return: Fixture dictionary.
+        :rtype: dict[str, str]
+        """
+
         split_row = fixture.split()
 
         split_row = [value for value in split_row if value != "OT" and value != "(IV)"]
@@ -134,7 +191,11 @@ class FixtureSet:
             "Attendance": attendance_field
         }
 
-    def __populate_dataframe(self):
+    def __populate_dataframe(self) -> None:
+        """
+        Populate the fixtures dataframe with the rows of fixtures.
+        """
+
         data = self.__fixtures
         data.pop(0)
 

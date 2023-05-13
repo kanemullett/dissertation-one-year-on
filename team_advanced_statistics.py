@@ -96,6 +96,11 @@ class TeamAdvancedStatistics:
 
         self.__advanced_statistics_dataframe = pd.DataFrame(columns=self.__headings)
 
+    def get_advanced_statistics_dataframe(self) -> pd.DataFrame:
+        self.__populate_dataframe()
+
+        return self.__advanced_statistics_dataframe
+
     def __get_dataframes(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """
         Retrieve populated dataframes for both the team's statistics and their opponents' statistics.

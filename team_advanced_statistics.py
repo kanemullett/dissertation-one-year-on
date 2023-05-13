@@ -97,6 +97,13 @@ class TeamAdvancedStatistics:
         self.__advanced_statistics_dataframe = pd.DataFrame(columns=self.__headings)
 
     def get_advanced_statistics_dataframe(self) -> pd.DataFrame:
+        """
+        Retrieve an advanced statistics populated with the team's advanced statistics for the given season.
+
+        :return: The team's advanced statistics dataframe.
+        :rtype: DataFrame
+        """
+
         self.__populate_dataframe()
 
         return self.__advanced_statistics_dataframe

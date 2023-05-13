@@ -14,7 +14,7 @@ class SeleniumScraper:
         self.options.add_argument("--window-size=1920,1200")
 
         self.driver = webdriver.Chrome(
-            options=self.options, executable_path="chromedriver.exe"
+            options=self.options, executable_path="../chromedriver.exe"
         )
 
     def __get_fixtures_lines(self, url: str) -> list[str]:

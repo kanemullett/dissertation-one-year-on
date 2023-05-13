@@ -188,7 +188,7 @@ class FixtureSet:
             "Away PTS": away_points_field,
             "Home Team": home_team_field,
             "Home PTS": home_points_field,
-            "Attendance": attendance_field
+            "Attendance": attendance_field,
         }
 
     def __populate_dataframe(self) -> None:

@@ -71,6 +71,43 @@ class TeamAdvancedStatistics:
         self.__opponent_personal_fouls = float(self.__opponent_statistics["PF"])
         self.__opponent_points = float(self.__opponent_statistics["PTS"])
 
+        self.__headings = [
+            "PPG",
+            "PAPG",
+            "ORtg",
+            "DRtg",
+            "NRtg",
+            "ASTpG",
+            "AST%",
+            "AST/TOV",
+            "DRBpG",
+            "ORBpG",
+            "TRBpG",
+            "DRB%",
+            "ORB%",
+            "TRB%",
+            "TOV%",
+            "EFG%",
+            "TSA",
+            "TS%",
+            "Pace",
+            "TIE",
+        ]
+
+        self.__advanced_statistics_dataframe = pd.DataFrame(columns=self.__headings)
+
+    def get_advanced_statistics_dataframe(self) -> pd.DataFrame:
+        """
+        Retrieve an advanced statistics populated with the team's advanced statistics for the given season.
+
+        :return: The team's advanced statistics dataframe.
+        :rtype: DataFrame
+        """
+
+        self.__populate_dataframe()
+
+        return self.__advanced_statistics_dataframe
+
     def __get_dataframes(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """
         Retrieve populated dataframes for both the team's statistics and their opponents' statistics.
@@ -86,7 +123,7 @@ class TeamAdvancedStatistics:
             this_season_statistics.get_opponent_dataframe(),
         )
 
-    def create_advanced_statistics(self) -> dict[str, float]:
+    def __create_advanced_statistics(self) -> dict[str, float]:
         """
         Populate dictionary with calculated advanced statistics.
 
@@ -502,7 +539,11 @@ class TeamAdvancedStatistics:
             3,
         )
 
+    def __populate_dataframe(self) -> None:
+        """
+        Populate the advanced statistics dataframe with the advanced statistics row.
+        """
 
-if __name__ == "__main__":
-    this_advanced_stats = TeamAdvancedStatistics("DEN", "2023")
-    print(this_advanced_stats.create_advanced_statistics())
+        self.__advanced_statistics_dataframe.loc[
+            len(self.__advanced_statistics_dataframe)
+        ] = self.__create_advanced_statistics()

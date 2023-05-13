@@ -71,6 +71,31 @@ class TeamAdvancedStatistics:
         self.__opponent_personal_fouls = float(self.__opponent_statistics["PF"])
         self.__opponent_points = float(self.__opponent_statistics["PTS"])
 
+        self.__headings = [
+            "PPG",
+            "PAPG",
+            "ORtg",
+            "DRtg",
+            "NRtg",
+            "ASTpG",
+            "AST%",
+            "AST/TOV",
+            "DRBpG",
+            "ORBpG",
+            "TRBpG",
+            "DRB%",
+            "ORB%",
+            "TRB%",
+            "TOV%",
+            "EFG%",
+            "TSA",
+            "TS%",
+            "Pace",
+            "TIE",
+        ]
+
+        self.__advanced_statistics_dataframe = pd.DataFrame(columns=self.__headings)
+
     def __get_dataframes(self) -> tuple[pd.DataFrame, pd.DataFrame]:
         """
         Retrieve populated dataframes for both the team's statistics and their opponents' statistics.

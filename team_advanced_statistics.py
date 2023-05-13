@@ -547,8 +547,3 @@ class TeamAdvancedStatistics:
         self.__advanced_statistics_dataframe.loc[
             len(self.__advanced_statistics_dataframe)
         ] = self.__create_advanced_statistics()
-
-
-if __name__ == "__main__":
-    this_advanced_stats = TeamAdvancedStatistics("DEN", "2023")
-    print(this_advanced_stats.create_advanced_statistics())

@@ -133,6 +133,8 @@ class FixtureSet:
             and value != "(IV)"
             and value != "Box"
             and value != "Score"
+            and value != "Play-In"
+            and value != "Game"
         ]
 
         return self.__format_fixtures(split_row)
@@ -150,6 +152,9 @@ class FixtureSet:
             "Blazers",
             "Spurs",
         ]
+
+        if len(fixture_items) < 14:
+            return {"game": "not played"}
 
         fixture_dictionary = {
             "Date": f"{fixture_items[1]} {fixture_items[2]} {fixture_items[3]}",
@@ -260,4 +265,5 @@ class FixtureSet:
 
         for row in data:
             if row[0:4] != "Date":
-                self.__dataframe.loc[len(self.__dataframe)] = self.__create_row(row)
+                if self.__create_row(row) != {"game": "not played"}:
+                    self.__dataframe.loc[len(self.__dataframe)] = self.__create_row(row)

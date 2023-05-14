@@ -202,3 +202,8 @@ class FixtureSet:
         for row in data:
             if row[0:4] != "Date":
                 self.__dataframe.loc[len(self.__dataframe)] = self.__create_row(row)
+
+
+if __name__ == "__main__":
+    hello = FixtureSet("october", "2023")
+    print(hello.get_dataframe()["Date"][0])

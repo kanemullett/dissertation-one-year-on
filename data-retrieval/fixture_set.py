@@ -167,6 +167,15 @@ class FixtureSet:
             fixture_dictionary["Home PTS"] = f"{split_row[11]}"
             fixture_dictionary["Attendance"] = "0"
 
+        if len(split_row) == 14 and split_row[7] in last_words and split_row[11] in last_words:
+            fixture_dictionary[
+                "Away Team"
+            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
+            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
+            fixture_dictionary["Home Team"] = f"{split_row[9]} {split_row[10]} {split_row[11]}"
+            fixture_dictionary["Home PTS"] = f"{split_row[12]}"
+            fixture_dictionary["Attendance"] = f"{split_row[13]}"
+
         if len(split_row) == 17:
             fixture_dictionary[
                 "Away Team"

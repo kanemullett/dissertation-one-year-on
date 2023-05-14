@@ -170,12 +170,18 @@ class FixtureSet:
             fixture_dictionary["Home PTS"] = f"{fixture_items[11]}"
             fixture_dictionary["Attendance"] = "0"
 
-        if len(fixture_items) == 14 and fixture_items[7] in last_words and fixture_items[11] in last_words:
+        if (
+            len(fixture_items) == 14
+            and fixture_items[7] in last_words
+            and fixture_items[11] in last_words
+        ):
             fixture_dictionary[
                 "Away Team"
             ] = f"{fixture_items[5]} {fixture_items[6]} {fixture_items[7]}"
             fixture_dictionary["Away PTS"] = f"{fixture_items[8]}"
-            fixture_dictionary["Home Team"] = f"{fixture_items[9]} {fixture_items[10]} {fixture_items[11]}"
+            fixture_dictionary[
+                "Home Team"
+            ] = f"{fixture_items[9]} {fixture_items[10]} {fixture_items[11]}"
             fixture_dictionary["Home PTS"] = f"{fixture_items[12]}"
             fixture_dictionary["Attendance"] = f"{fixture_items[13]}"
 
@@ -202,7 +208,9 @@ class FixtureSet:
                 fixture_dictionary["Home PTS"] = f"{fixture_items[12]}"
                 fixture_dictionary["Attendance"] = f"{fixture_items[13]}"
             else:
-                fixture_dictionary["Home Team"] = f"{fixture_items[9]} {fixture_items[10]}"
+                fixture_dictionary[
+                    "Home Team"
+                ] = f"{fixture_items[9]} {fixture_items[10]}"
                 fixture_dictionary["Home PTS"] = f"{fixture_items[11]}"
                 fixture_dictionary["Attendance"] = f"{fixture_items[12]}"
 
@@ -234,7 +242,9 @@ class FixtureSet:
                 fixture_dictionary["Home PTS"] = f"{fixture_items[11]}"
                 fixture_dictionary["Attendance"] = f"{fixture_items[12]}"
             else:
-                fixture_dictionary["Home Team"] = f"{fixture_items[8]} {fixture_items[9]}"
+                fixture_dictionary[
+                    "Home Team"
+                ] = f"{fixture_items[8]} {fixture_items[9]}"
                 fixture_dictionary["Home PTS"] = f"{fixture_items[10]}"
                 fixture_dictionary["Attendance"] = f"{fixture_items[11]}"
 

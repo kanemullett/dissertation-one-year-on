@@ -124,72 +124,109 @@ class FixtureSet:
 
         split_row = fixture.split()
 
-        split_row = [value for value in split_row if value != "OT" and value != "(IV)"]
+        split_row = [
+            value
+            for value in split_row
+            if value != "OT"
+            and value != "2OT"
+            and value != "3OT"
+            and value != "4OT"
+            and value != "(IV)"
+            and value != "Box"
+            and value != "Score"
+        ]
 
         three_names = ["Los", "Golden", "New", "Oklahoma", "Portland", "San"]
+        last_words = [
+            "Clippers",
+            "Lakers",
+            "Warriors",
+            "Pelicans",
+            "Knicks",
+            "Thunder",
+            "Blazers",
+            "Spurs",
+        ]
 
-        date_field = f"{split_row[1]} {split_row[2]} {split_row[3]}"
-        time_field = f"{split_row[4]}"
-        away_team_field = f"{split_row[5]} {split_row[6]}"
-        away_points_field = f"{split_row[7]}"
-        home_team_field = f"{split_row[8]} {split_row[9]}"
-        home_points_field = f"{split_row[10]}"
-        attendance_field = f"{split_row[13]}"
-
-        if len(split_row) == 19:
-            away_team_field = f"{split_row[5]} {split_row[6]} {split_row[7]}"
-            away_points_field = f"{split_row[8]}"
-            home_team_field = f"{split_row[9]} {split_row[10]} {split_row[11]}"
-            home_points_field = f"{split_row[12]}"
-            attendance_field = f"{split_row[15]}"
-
-        elif len(split_row) == 18 and split_row[5] in three_names:
-            away_team_field = f"{split_row[5]} {split_row[6]} {split_row[7]}"
-            away_points_field = f"{split_row[8]}"
-            if split_row[9] in three_names:
-                home_team_field = f"{split_row[9]} {split_row[10]} {split_row[11]}"
-                home_points_field = f"{split_row[12]}"
-                attendance_field = f"{split_row[15]}"
-            else:
-                home_team_field = f"{split_row[9]} {split_row[10]}"
-                home_points_field = f"{split_row[11]}"
-                attendance_field = f"{split_row[14]}"
-
-        elif len(split_row) == 18 and split_row[5] not in three_names:
-            away_team_field = f"{split_row[5]} {split_row[6]}"
-            away_points_field = f"{split_row[7]}"
-            home_team_field = f"{split_row[8]} {split_row[9]} {split_row[10]}"
-            home_points_field = f"{split_row[11]}"
-            attendance_field = f"{split_row[14]}"
-
-        elif len(split_row) == 17 and split_row[5] in three_names:
-            away_team_field = f"{split_row[5]} {split_row[6]} {split_row[7]}"
-            away_points_field = f"{split_row[8]}"
-            home_team_field = f"{split_row[9]} {split_row[10]}"
-            home_points_field = f"{split_row[11]}"
-            attendance_field = f"{split_row[14]}"
-
-        elif len(split_row) == 17 and split_row[5] not in three_names:
-            away_team_field = f"{split_row[5]} {split_row[6]}"
-            away_points_field = f"{split_row[7]}"
-            if split_row[8] in three_names:
-                home_team_field = f"{split_row[8]} {split_row[9]} {split_row[10]}"
-                home_points_field = f"{split_row[11]}"
-                attendance_field = f"{split_row[14]}"
-            else:
-                home_team_field = f"{split_row[8]} {split_row[9]}"
-                home_points_field = f"{split_row[10]}"
-                attendance_field = f"{split_row[13]}"
-
-        return {
-            "Date": date_field,
-            "Tip-Off Time": time_field,
-            "Away Team": away_team_field,
-            "Away PTS": away_points_field,
-            "Home Team": home_team_field,
-            "Home PTS": home_points_field,
-            "Attendance": attendance_field,
+        fixture_dictionary = {
+            "Date": f"{split_row[1]} {split_row[2]} {split_row[3]}",
+            "Tip-Off Time": f"{split_row[4]}",
+            "Away Team": f"{split_row[5]} {split_row[6]}",
+            "Away PTS": f"{split_row[7]}",
+            "Home Team": f"{split_row[8]} {split_row[9]}",
+            "Home PTS": f"{split_row[10]}",
+            "Attendance": f"{split_row[11]}",
         }
+
+        if len(split_row) == 14 and split_row[7] in last_words:
+            fixture_dictionary[
+                "Away Team"
+            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
+            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
+            fixture_dictionary["Home Team"] = f"{split_row[9]} {split_row[10]}"
+            fixture_dictionary["Home PTS"] = f"{split_row[11]}"
+            fixture_dictionary["Attendance"] = "0"
+
+        if len(split_row) == 17:
+            fixture_dictionary[
+                "Away Team"
+            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
+            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
+            fixture_dictionary[
+                "Home Team"
+            ] = f"{split_row[9]} {split_row[10]} {split_row[11]}"
+            fixture_dictionary["Home PTS"] = f"{split_row[12]}"
+            fixture_dictionary["Attendance"] = f"{split_row[13]}"
+
+        elif len(split_row) == 16 and split_row[5] in three_names:
+            fixture_dictionary[
+                "Away Team"
+            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
+            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
+            if split_row[9] in three_names:
+                fixture_dictionary[
+                    "Home Team"
+                ] = f"{split_row[9]} {split_row[10]} {split_row[11]}"
+                fixture_dictionary["Home PTS"] = f"{split_row[12]}"
+                fixture_dictionary["Attendance"] = f"{split_row[13]}"
+            else:
+                fixture_dictionary["Home Team"] = f"{split_row[9]} {split_row[10]}"
+                fixture_dictionary["Home PTS"] = f"{split_row[11]}"
+                fixture_dictionary["Attendance"] = f"{split_row[12]}"
+
+        elif len(split_row) == 16 and split_row[5] not in three_names:
+            fixture_dictionary["Away Team"] = f"{split_row[5]} {split_row[6]}"
+            fixture_dictionary["Away PTS"] = f"{split_row[7]}"
+            fixture_dictionary[
+                "Home Team"
+            ] = f"{split_row[8]} {split_row[9]} {split_row[10]}"
+            fixture_dictionary["Home PTS"] = f"{split_row[11]}"
+            fixture_dictionary["Attendance"] = f"{split_row[12]}"
+
+        elif len(split_row) == 15 and split_row[5] in three_names:
+            fixture_dictionary[
+                "Away Team"
+            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
+            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
+            fixture_dictionary["Home Team"] = f"{split_row[9]} {split_row[10]}"
+            fixture_dictionary["Home PTS"] = f"{split_row[11]}"
+            fixture_dictionary["Attendance"] = f"{split_row[12]}"
+
+        elif len(split_row) == 15 and split_row[5] not in three_names:
+            fixture_dictionary["Away Team"] = f"{split_row[5]} {split_row[6]}"
+            fixture_dictionary["Away PTS"] = f"{split_row[7]}"
+            if split_row[8] in three_names:
+                fixture_dictionary[
+                    "Home Team"
+                ] = f"{split_row[8]} {split_row[9]} {split_row[10]}"
+                fixture_dictionary["Home PTS"] = f"{split_row[11]}"
+                fixture_dictionary["Attendance"] = f"{split_row[12]}"
+            else:
+                fixture_dictionary["Home Team"] = f"{split_row[8]} {split_row[9]}"
+                fixture_dictionary["Home PTS"] = f"{split_row[10]}"
+                fixture_dictionary["Attendance"] = f"{split_row[11]}"
+
+        return fixture_dictionary
 
     def __populate_dataframe(self) -> None:
         """

@@ -148,7 +148,7 @@ class TeamAdvancedStatistics:
             "TRB%": self.__calculate_total_rebound_percentage(),
             "TOV%": self.__calculate_turnover_percentage(),
             "EFG%": self.__calculate_effective_field_goal_percentage(),
-            "TSA": self.__calculate_true_shooting_attempts(),
+            "TSApG": self.__per_game(self.__calculate_true_shooting_attempts()),
             "TS%": self.__calculate_true_shooting_percentage(),
             "Pace": self.__calculate_pace(),
             "TIE": self.__calculate_team_impact_estimate(),

@@ -1,0 +1,16 @@
+version: '3'
+services:
+  database:
+    container_name: nba-prediction-machine-database
+    image: mysql:5.7
+    restart: unless-stopped
+    ports:
+      - "3307:3306"
+    command: --init-file /data/application/init.sql
+    volumes:
+      - ./database-create.sql:/data/application/init.sql
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: homestead
+      MYSQL_PASSWORD: secret

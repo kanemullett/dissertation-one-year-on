@@ -1,0 +1,6 @@
+CREATE DATABASE nba_statistics;
+USE nba_statistics;
+
+CREATE TABLE teams (teamId INT(16) UNIQUE NOT NULL AUTO_INCREMENT, teamName VARCHAR(64), season INT(4), pointsPerGame DECIMAL(16, 3), pointsAllowedPerGame DECIMAL(16, 3), offensiveRating DECIMAL(16, 3), defensiveRating DECIMAL(16, 3), netRating DECIMAL(16, 3), assistsPerGame DECIMAL(16, 3), assistRate DECIMAL(16, 3), assistTurnoverRatio DECIMAL(16, 3), defensiveReboundsPerGame DECIMAL(16, 3), offensiveReboundsPerGame DECIMAL(16, 3), reboundsPerGame DECIMAL(16, 3), defensiveReboundingRate DECIMAL(16, 3), offensiveReboundingRate DECIMAL(16, 3), reboundingRate DECIMAL(16, 3), turnoverRate DECIMAL(16, 3), effectiveFieldGoalPercentage DECIMAL(16, 3), trueShootingAttemptsPerGame DECIMAL(16, 3), trueShootingPercentage DECIMAL(16, 3), pace DECIMAL(16, 3), teamImpactEstimate DECIMAL(16, 3), PRIMARY KEY (teamId));
+
+CREATE TABLE fixtures (fixtureId INT(16) UNIQUE NOT NULL AUTO_INCREMENT, gameDate VARCHAR(64), tipOffTime VARCHAR(16), awayTeamId INT(16), awayPoints INT(4), homeTeamId INT(16), homePoints INT(4), attendance INT(8), PRIMARY KEY (fixtureId), FOREIGN KEY (awayTeamId) REFERENCES teams(teamId), FOREIGN KEY (homeTeamId) REFERENCES teams(teamId));

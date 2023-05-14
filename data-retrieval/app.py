@@ -19,9 +19,7 @@ fixture_parser.add_argument("year", type=int, required=True)
 
 @scrape.route("/fixtures")
 class Fixtures(Resource):
-    """
-
-    """
+    """ """
 
     @scrape.expect(fixture_parser)
     @scrape.response(200, "OK")
@@ -32,7 +30,17 @@ class Fixtures(Resource):
         month = (args["month"]).lower()
         year = args["year"]
 
-        accepted_months = ["october", "november", "december", "january", "february", "march", "april", "may", "june"]
+        accepted_months = [
+            "october",
+            "november",
+            "december",
+            "january",
+            "february",
+            "march",
+            "april",
+            "may",
+            "june",
+        ]
 
         if month not in accepted_months:
             return make_response(jsonify("Invalid month selection."), 400)
@@ -47,25 +55,29 @@ class Fixtures(Resource):
 
         row = 0
         while row < len(this_fixture_dataframe):
-            fixtures.append({
-                "date": this_fixture_dataframe["Date"][row],
-                "tipOffTime": this_fixture_dataframe["Tip-Off Time"][row],
-                "awayTeam": this_fixture_dataframe["Away Team"][row],
-                "awayPoints": int(this_fixture_dataframe["Away PTS"][row]),
-                "homeTeam": this_fixture_dataframe["Home Team"][row],
-                "homePoints": int(this_fixture_dataframe["Home PTS"][row]),
-                "attendance": this_fixture_dataframe["Attendance"][row]
-            })
+            fixtures.append(
+                {
+                    "date": this_fixture_dataframe["Date"][row],
+                    "tipOffTime": this_fixture_dataframe["Tip-Off Time"][row],
+                    "awayTeam": this_fixture_dataframe["Away Team"][row],
+                    "awayPoints": int(this_fixture_dataframe["Away PTS"][row]),
+                    "homeTeam": this_fixture_dataframe["Home Team"][row],
+                    "homePoints": int(this_fixture_dataframe["Home PTS"][row]),
+                    "attendance": this_fixture_dataframe["Attendance"][row],
+                }
+            )
             row += 1
 
         final_object = {
             "month": month,
             "year": year,
             "fixtureCount": len(fixtures),
-            "fixtures": fixtures
+            "fixtures": fixtures,
         }
 
-        return Response(json.dumps(final_object), mimetype="application/json", status=200)
+        return Response(
+            json.dumps(final_object), mimetype="application/json", status=200
+        )
 
 
 if __name__ == "__main__":

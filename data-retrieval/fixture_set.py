@@ -111,8 +111,7 @@ class FixtureSet:
 
         return headings
 
-    @staticmethod
-    def __create_row(fixture: str) -> dict[str, str]:
+    def __create_row(self, fixture: str) -> dict[str, str]:
         """
         Convert a line of fixture data to a fixture dictionary which can then be appended as a row to a dataframe.
 
@@ -134,8 +133,14 @@ class FixtureSet:
             and value != "(IV)"
             and value != "Box"
             and value != "Score"
+            and value != "Play-In"
+            and value != "Game"
         ]
 
+        return self.__format_fixtures(split_row)
+
+    @staticmethod
+    def __format_fixtures(fixture_items: list[str]) -> dict[str, str]:
         three_names = ["Los", "Golden", "New", "Oklahoma", "Portland", "San"]
         last_words = [
             "Clippers",
@@ -148,83 +153,105 @@ class FixtureSet:
             "Spurs",
         ]
 
+        if len(fixture_items) < 14:
+            return {"game": "not played"}
+
         fixture_dictionary = {
-            "Date": f"{split_row[1]} {split_row[2]} {split_row[3]}",
-            "Tip-Off Time": f"{split_row[4]}",
-            "Away Team": f"{split_row[5]} {split_row[6]}",
-            "Away PTS": f"{split_row[7]}",
-            "Home Team": f"{split_row[8]} {split_row[9]}",
-            "Home PTS": f"{split_row[10]}",
-            "Attendance": f"{split_row[11]}",
+            "Date": f"{fixture_items[1]} {fixture_items[2]} {fixture_items[3]}",
+            "Tip-Off Time": f"{fixture_items[4]}",
+            "Away Team": f"{fixture_items[5]} {fixture_items[6]}",
+            "Away PTS": f"{fixture_items[7]}",
+            "Home Team": f"{fixture_items[8]} {fixture_items[9]}",
+            "Home PTS": f"{fixture_items[10]}",
+            "Attendance": f"{fixture_items[11]}",
         }
 
-        if len(split_row) == 14 and split_row[7] in last_words:
+        if len(fixture_items) == 14 and fixture_items[7] in last_words:
             fixture_dictionary[
                 "Away Team"
-            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
-            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
-            fixture_dictionary["Home Team"] = f"{split_row[9]} {split_row[10]}"
-            fixture_dictionary["Home PTS"] = f"{split_row[11]}"
+            ] = f"{fixture_items[5]} {fixture_items[6]} {fixture_items[7]}"
+            fixture_dictionary["Away PTS"] = f"{fixture_items[8]}"
+            fixture_dictionary["Home Team"] = f"{fixture_items[9]} {fixture_items[10]}"
+            fixture_dictionary["Home PTS"] = f"{fixture_items[11]}"
             fixture_dictionary["Attendance"] = "0"
 
-        if len(split_row) == 17:
+        if (
+            len(fixture_items) == 14
+            and fixture_items[7] in last_words
+            and fixture_items[11] in last_words
+        ):
             fixture_dictionary[
                 "Away Team"
-            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
-            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
+            ] = f"{fixture_items[5]} {fixture_items[6]} {fixture_items[7]}"
+            fixture_dictionary["Away PTS"] = f"{fixture_items[8]}"
             fixture_dictionary[
                 "Home Team"
-            ] = f"{split_row[9]} {split_row[10]} {split_row[11]}"
-            fixture_dictionary["Home PTS"] = f"{split_row[12]}"
-            fixture_dictionary["Attendance"] = f"{split_row[13]}"
+            ] = f"{fixture_items[9]} {fixture_items[10]} {fixture_items[11]}"
+            fixture_dictionary["Home PTS"] = f"{fixture_items[12]}"
+            fixture_dictionary["Attendance"] = f"{fixture_items[13]}"
 
-        elif len(split_row) == 16 and split_row[5] in three_names:
+        if len(fixture_items) == 17:
             fixture_dictionary[
                 "Away Team"
-            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
-            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
-            if split_row[9] in three_names:
-                fixture_dictionary[
-                    "Home Team"
-                ] = f"{split_row[9]} {split_row[10]} {split_row[11]}"
-                fixture_dictionary["Home PTS"] = f"{split_row[12]}"
-                fixture_dictionary["Attendance"] = f"{split_row[13]}"
-            else:
-                fixture_dictionary["Home Team"] = f"{split_row[9]} {split_row[10]}"
-                fixture_dictionary["Home PTS"] = f"{split_row[11]}"
-                fixture_dictionary["Attendance"] = f"{split_row[12]}"
-
-        elif len(split_row) == 16 and split_row[5] not in three_names:
-            fixture_dictionary["Away Team"] = f"{split_row[5]} {split_row[6]}"
-            fixture_dictionary["Away PTS"] = f"{split_row[7]}"
+            ] = f"{fixture_items[5]} {fixture_items[6]} {fixture_items[7]}"
+            fixture_dictionary["Away PTS"] = f"{fixture_items[8]}"
             fixture_dictionary[
                 "Home Team"
-            ] = f"{split_row[8]} {split_row[9]} {split_row[10]}"
-            fixture_dictionary["Home PTS"] = f"{split_row[11]}"
-            fixture_dictionary["Attendance"] = f"{split_row[12]}"
+            ] = f"{fixture_items[9]} {fixture_items[10]} {fixture_items[11]}"
+            fixture_dictionary["Home PTS"] = f"{fixture_items[12]}"
+            fixture_dictionary["Attendance"] = f"{fixture_items[13]}"
 
-        elif len(split_row) == 15 and split_row[5] in three_names:
+        elif len(fixture_items) == 16 and fixture_items[5] in three_names:
             fixture_dictionary[
                 "Away Team"
-            ] = f"{split_row[5]} {split_row[6]} {split_row[7]}"
-            fixture_dictionary["Away PTS"] = f"{split_row[8]}"
-            fixture_dictionary["Home Team"] = f"{split_row[9]} {split_row[10]}"
-            fixture_dictionary["Home PTS"] = f"{split_row[11]}"
-            fixture_dictionary["Attendance"] = f"{split_row[12]}"
-
-        elif len(split_row) == 15 and split_row[5] not in three_names:
-            fixture_dictionary["Away Team"] = f"{split_row[5]} {split_row[6]}"
-            fixture_dictionary["Away PTS"] = f"{split_row[7]}"
-            if split_row[8] in three_names:
+            ] = f"{fixture_items[5]} {fixture_items[6]} {fixture_items[7]}"
+            fixture_dictionary["Away PTS"] = f"{fixture_items[8]}"
+            if fixture_items[9] in three_names:
                 fixture_dictionary[
                     "Home Team"
-                ] = f"{split_row[8]} {split_row[9]} {split_row[10]}"
-                fixture_dictionary["Home PTS"] = f"{split_row[11]}"
-                fixture_dictionary["Attendance"] = f"{split_row[12]}"
+                ] = f"{fixture_items[9]} {fixture_items[10]} {fixture_items[11]}"
+                fixture_dictionary["Home PTS"] = f"{fixture_items[12]}"
+                fixture_dictionary["Attendance"] = f"{fixture_items[13]}"
             else:
-                fixture_dictionary["Home Team"] = f"{split_row[8]} {split_row[9]}"
-                fixture_dictionary["Home PTS"] = f"{split_row[10]}"
-                fixture_dictionary["Attendance"] = f"{split_row[11]}"
+                fixture_dictionary[
+                    "Home Team"
+                ] = f"{fixture_items[9]} {fixture_items[10]}"
+                fixture_dictionary["Home PTS"] = f"{fixture_items[11]}"
+                fixture_dictionary["Attendance"] = f"{fixture_items[12]}"
+
+        elif len(fixture_items) == 16 and fixture_items[5] not in three_names:
+            fixture_dictionary["Away Team"] = f"{fixture_items[5]} {fixture_items[6]}"
+            fixture_dictionary["Away PTS"] = f"{fixture_items[7]}"
+            fixture_dictionary[
+                "Home Team"
+            ] = f"{fixture_items[8]} {fixture_items[9]} {fixture_items[10]}"
+            fixture_dictionary["Home PTS"] = f"{fixture_items[11]}"
+            fixture_dictionary["Attendance"] = f"{fixture_items[12]}"
+
+        elif len(fixture_items) == 15 and fixture_items[5] in three_names:
+            fixture_dictionary[
+                "Away Team"
+            ] = f"{fixture_items[5]} {fixture_items[6]} {fixture_items[7]}"
+            fixture_dictionary["Away PTS"] = f"{fixture_items[8]}"
+            fixture_dictionary["Home Team"] = f"{fixture_items[9]} {fixture_items[10]}"
+            fixture_dictionary["Home PTS"] = f"{fixture_items[11]}"
+            fixture_dictionary["Attendance"] = f"{fixture_items[12]}"
+
+        elif len(fixture_items) == 15 and fixture_items[5] not in three_names:
+            fixture_dictionary["Away Team"] = f"{fixture_items[5]} {fixture_items[6]}"
+            fixture_dictionary["Away PTS"] = f"{fixture_items[7]}"
+            if fixture_items[8] in three_names:
+                fixture_dictionary[
+                    "Home Team"
+                ] = f"{fixture_items[8]} {fixture_items[9]} {fixture_items[10]}"
+                fixture_dictionary["Home PTS"] = f"{fixture_items[11]}"
+                fixture_dictionary["Attendance"] = f"{fixture_items[12]}"
+            else:
+                fixture_dictionary[
+                    "Home Team"
+                ] = f"{fixture_items[8]} {fixture_items[9]}"
+                fixture_dictionary["Home PTS"] = f"{fixture_items[10]}"
+                fixture_dictionary["Attendance"] = f"{fixture_items[11]}"
 
         return fixture_dictionary
 
@@ -238,4 +265,5 @@ class FixtureSet:
 
         for row in data:
             if row[0:4] != "Date":
-                self.__dataframe.loc[len(self.__dataframe)] = self.__create_row(row)
+                if self.__create_row(row) != {"game": "not played"}:
+                    self.__dataframe.loc[len(self.__dataframe)] = self.__create_row(row)
